@@ -1,0 +1,34 @@
+function followPath_function(inInts,inFloats,inStrings,inBuffer)
+        --
+        robotHandle_test=sim.getObjectHandle('StartConfiguration')
+        initialPosition_test=sim.getObjectPosition(robotHandle_test,-1) 
+        
+        -- Attempting to Make arrays for variable Path Length
+        local arraySize=inInts[1]
+        local arraySizeY=arraySize*2
+        local diff=(arraySizeY-arraySize)+1
+        local positionX_points={inFloats[1]}
+        local positionY_points={inFloats[diff]}
+        
+        for i=1,arraySize,1 do
+            table.insert(positionX_points,inFloats[i])
+        end
+
+        for j=diff,arraySizeY,1 do
+            table.insert(positionY_points,inFloats[j])
+        end
+
+        for i=1,arraySize,1 do
+
+            simTime=sim.getSimulationTime()
+
+            if (simTime>2) and (simTime<5) then
+                pos={positionX_points[i],positionY_points[i],0}
+                orient={0,0,0}
+                sim.setObjectPosition(robotHandle_test,-1,pos)
+                sim.setObjectOrientation(robotHandle_test,-1,orient)
+            end
+        end
+
+        return {},positionX_points,{},'' -- return the handle of the created dummy
+end

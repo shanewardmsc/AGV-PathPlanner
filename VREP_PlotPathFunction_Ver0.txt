@@ -1,0 +1,33 @@
+function plotPath_function(inInts,inFloats,inStrings,inBuffer)
+        --
+        robotHandle_test=sim.getObjectHandle('StartConfiguration')
+        initialPosition_test=sim.getObjectPosition(robotHandle_test,-1) 
+        
+        -- Attempting to Make arrays for variable Path Length
+        local arraySize=inInts[1]
+        local arraySizeY=arraySize*2
+        local diff=(arraySizeY-arraySize)+1
+        local positionX_points={inFloats[1]}
+        local positionY_points={inFloats[diff]}
+
+        for i=1,arraySize,1 do
+            table.insert(positionX_points,inFloats[i])
+        end
+
+        for j=diff,arraySizeY,1 do
+            table.insert(positionY_points,inFloats[j])
+        end
+        
+        _lineContainer_test=sim.addDrawingObject(sim.drawing_lines,3,0,-1,99999,{0.2,0.2,0.2})
+        
+        local pc_test=positionX_points
+        
+        for i=1,inInts[1],1 do
+
+            lineDat_test={positionX_points[i],positionY_points[i],0,positionX_points[i+1],positionY_points[i+1],0}
+
+            sim.addDrawingObjectItem(_lineContainer_test,lineDat_test)
+        end
+
+        return {},positionX_points,{},'' -- return the handle of the created dummy
+end
